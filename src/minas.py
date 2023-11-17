@@ -9,7 +9,6 @@ Este ejercicio es una excelente manera de evaluar y mejorar las habilidades de p
 
 import random
 
-
 def mostrar_tablero(tablero:list, mostrar_minas: bool = False) -> None:
     """
     Función que muestra el tablero del buscaminas
@@ -231,6 +230,7 @@ if __name__ == "__main__":
                 if error_message:
                     print(error_message)
                 else:
+                    print(f"Revelando celda {coordenadas[0]}, {coordenadas[1]}....")
                     coordenadas_validas = True
 
             if opcion == '1' and tablero[int(coordenadas[0]) - 1][int(coordenadas[1]) - 1] == '*':
