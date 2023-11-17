@@ -9,9 +9,15 @@ Este ejercicio es una excelente manera de evaluar y mejorar las habilidades de p
 
 import random
 
-def mostrarTablero(tablero, mostrar_minas=False):
+def mostrarTablero(tablero:list, mostrar_minas: bool = False) -> None:
     """
-    Función que muestra el tablero    
+    Función que muestra el tablero del buscaminas
+
+    Parámetros:
+    - tablero : list
+        Es una lista de listas que representa el estado actual del tablero.
+    - mostrar_minas : bool
+        Indica si las minas deben mostrarse en el tablero. Por defecto es False.
     """
     filas = len(tablero)
     columnas = len(tablero[0])
@@ -31,18 +37,35 @@ def mostrarTablero(tablero, mostrar_minas=False):
                     print(tablero[fila - 1][columna - 1], end=' ')
         print()
 
-def mostrarMenu():
+def mostrarMenu() -> str:
     """
-    Función que muestra el menú del juego    
+    Muestra el menú del juego de buscaminas y solicita al usuario que elija una opción.
+
+    Returns:
+    - str: 
+        La opción seleccionada por el usuario.
     """
-    print("\n1. Revelar celda\n"+
-    "2. Marcar celda\n"
-    "3. Salir\n")
+    print("\n1. Revelar celda\n"
+          "2. Marcar celda\n"
+          "3. Salir\n")
     return input("Elija una opcion: ")
 
-def generarMinas(filas, columnas, tablero):
+
+def generarMinas(filas: int, columnas: int, tablero: list[list[str]]) -> list[list[str]]:
     """
-    Función que genera minas aleatorias en el tablero
+    Genera minas aleatorias en el tablero del juego de buscaminas.
+
+    Parameters:
+    - filas : int 
+        Número de filas del tablero.
+    - columnas : int
+        Número de columnas del tablero.
+    - tablero : (list[list[str]])
+        Matriz que representa el tablero del juego.
+
+    Returns:
+    - list[list[str]]
+        El tablero con las minas generadas.
     """
     mina = "*"
     for _ in range(10):
@@ -51,6 +74,7 @@ def generarMinas(filas, columnas, tablero):
         if tablero[fila_mina - 1][columna_mina - 1] != mina:
             tablero[fila_mina - 1][columna_mina - 1] = mina
     return tablero
+
 
 def contarMinasAlrededor(tablero, fila, columna):
     """
