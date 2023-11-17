@@ -25,6 +25,7 @@ def test_generar_minas():
                 assert 1 <= fila + 1 <= filas
                 assert 1 <= celda + 1 <= columnas
 
+
 # Test para contar las minas al rededor
 def test_contar_minas_alrededor():
     tablero = [
@@ -32,7 +33,8 @@ def test_contar_minas_alrededor():
         ['*', '*', '*'],
         ['.', '.', '.']
     ]
-    assert contar_minas_alrededor(tablero, 2, 2) == 8
+    assert contar_minas_alrededor(tablero, 2, 2) == 2
+
 
 # Test para revelar la celda
 def test_revelar_celda():
@@ -43,9 +45,9 @@ def test_revelar_celda():
     ]
     revelar_celda(tablero, 1, 1)
     assert tablero == [
-        ['1', ' ', ' '],
-        [' ', '*', ' '],
-        [' ', ' ', ' ']
+        ['1', '.', '.'],
+        ['.', '*', '.'],
+        ['.', '.', '.']
     ]
 
 # Test para marcar una posible mina
@@ -72,9 +74,9 @@ def test_actualizar_tablero_revelar_celda():
     ]
     actualizar_tablero(tablero, '1', (1, 1), 3, 3)
     assert tablero == [
-        ['1', ' ', '.'],
-        [' ', '*', '.'],
-        [' ', ' ', ' ']
+        ['1', '.', '.'],
+        ['.', '*', '.'],
+        ['.', '.', '.']
     ]
 
 # Test para revisar la victoria con minas pendientes
