@@ -170,17 +170,21 @@ def actualizar_tablero(tablero:list[list[str]], opcion:str, coordenadas:tuple[in
     Returns
     --------
     - str: 
-        Mensaje de error si las coordenadas están fuera de rango, 
+        Mensaje de error si las coordenadas están fuera de rango o si se introduce una letra, 
         None si todo está correcto.
     """
     fila, columna = coordenadas
-    if 1 <= fila <= filas and 1 <= columna <= columnas:
+    try:
+        fila, columna = int(fila), int(columna)
+        if not (1 <= fila <= filas and 1 <= columna <= columnas):
+            raise ValueError("Coordenadas fuera de rango. Vuelve a intentar.")
         if opcion == '1':
             revelar_celda(tablero, fila, columna)
         elif opcion == '2':
             marcar_celda(tablero, fila, columna)
-    else:
-        return "Coordenadas fuera de rango. Vuelve a intentar."
+        return None
+    except ValueError:
+        return "Coordenadas inválidas. Vuelve a intentar."
 
 def revisar_victoria(tablero:list[list[str]]) -> bool:
     """
@@ -222,22 +226,22 @@ if __name__ == "__main__":
 
             while not coordenadas_validas:
                 coordenadas = input("Ingrese las coordenadas (fila, columna): ").split(',')
-                if len(coordenadas) == 2 and coordenadas[0].isdigit() and coordenadas[1].isdigit():
-                    coordenadas = (int(coordenadas[0]), int(coordenadas[1]))
-                    coordenadas_validas = True
+                error_message = actualizar_tablero(tablero, opcion, coordenadas, filas, columnas)
+                if error_message:
+                    print(error_message)
                 else:
-                    print("Coordenadas inválidas. Vuelve a intentar.")
-            actualizar_tablero(tablero, opcion, coordenadas, filas, columnas)
-            if opcion == '1' and tablero[coordenadas[0] - 1][coordenadas[1] - 1] == '*':
+                    coordenadas_validas = True
+
+            if opcion == '1' and tablero[int(coordenadas[0]) - 1][int(coordenadas[1]) - 1] == '*':
                 # Revelar todas las minas si el jugador revela una mina
                 # en caso de que pierda
-                mostrar_tablero(tablero, mostrar_minas = True)
+                mostrar_tablero(tablero, mostrar_minas=True)
                 print("¡Has perdido!")
                 juego_en_curso = False
             elif revisar_victoria(tablero):
                 # Revisar si todas las celdas sin minas han sido reveladas
                 # en caso de que haya conseguido la victoria
-                mostrar_tablero(tablero, mostrar_minas = True)
+                mostrar_tablero(tablero, mostrar_minas=True)
                 print("¡Has ganado!")
                 juego_en_curso = False
         elif opcion != '3':
