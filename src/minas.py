@@ -63,7 +63,7 @@ def generar_minas(filas: int, columnas: int, tablero: list[list[str]]) -> list[l
         Número de filas del tablero.
     - columnas : int
         Número de columnas del tablero.
-    - tablero : (list[list[str]])
+    - tablero : list[list[str]]
         Matriz que representa el tablero del juego.
 
     Returns
@@ -97,7 +97,6 @@ def contar_minas_alrededor(tablero:list[list[str]], fila: int, columna:int) -> i
     --------
     - int: 
         Número de minas alrededor de la celda.
-
     """
     mina = "*"
     filas = len(tablero)
@@ -196,7 +195,6 @@ def revisar_victoria(tablero:list[list[str]]) -> bool:
     -------
     - bool: 
         True si todas las celdas sin minas han sido reveladas, False en caso contrario.
-
     """
     for fila in tablero:
         for celda in fila:
@@ -205,7 +203,6 @@ def revisar_victoria(tablero:list[list[str]]) -> bool:
     return True
 
 if __name__ == "__main__":
-    
     filas = 8
     columnas = 8
     tablero = [['.' for _ in range(columnas)] for _ in range(filas)]
@@ -245,5 +242,4 @@ if __name__ == "__main__":
                 juego_en_curso = False
         elif opcion != '3':
             print("Opción inválida.")
-
     print("¡Gracias por jugar!\n")
