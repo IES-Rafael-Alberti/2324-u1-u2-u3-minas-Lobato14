@@ -9,14 +9,10 @@ Este ejercicio es una excelente manera de evaluar y mejorar las habilidades de p
 
 import random
 
-def mostrarTablero():
+def mostrarTablero(fila:int, columna:int, tablero):
     """
         Función que muestra el tablero    
     """
-    filas = 8
-    columnas = 8
-    matriz = [['.' for _ in range(columnas)] for _ in range(filas)]
-
     for fila in range(filas + 1):
         for columna in range(columnas + 1):
             if fila == 0 and columna == 0:
@@ -26,7 +22,7 @@ def mostrarTablero():
             elif columna == 0:
                 print(fila, end=' ')
             else:
-                print(matriz[fila - 1][columna - 1], end=' ')
+                print(tablero[fila - 1][columna - 1], end=' ')
         print()
 
 def mostrarMenu():
@@ -36,6 +32,19 @@ def mostrarMenu():
     print("\n1. Revelar celda\n"+
     "2. Marcar celda\n"
     "3. Salir\n")
+    return input("Elija una opcion: ")
+
+def generarMinas(filas, columnas, tablero):
+    for _ in range(10):
+        fila = random.randint(0, filas - 1)
+        columna = random.randint(0, columnas - 1)
+        tablero[fila][columna] = mina
+    return tablero
+
+def actualizarTablero():
+    """
+        Función en la que actualiza el tablero    
+    """
 
 def jugar():
     """
@@ -44,19 +53,27 @@ def jugar():
     """
 
 if __name__ == "__main__":
-    """
-    Esta sección del código se ejecuta solo si ejecutamos este archivo directamente.
-    """
+
+    filas = 8
+    columnas = 8
+    tablero = [['.' for _ in range(columnas)] for _ in range(filas)]
+
+    mina = "*"
+    marcador_mina = "F"
+
     opcion = ""
-    while opcion != "3":
+    while opcion != 3:
         mostrarTablero()
-        mostrarMenu()
-        opcion = input("Elija su elección: ")
+        opcion = mostrarMenu()
+        generarMinas()
         if opcion == "1":
-            coordenadas = input("Ingrese las coordenadas (fila, columna): ")
+            coordenadas = input("Ingrese las coordenadas (fila, columna): ").split(",")
+            coordenadas = (int(coordenadas[0]), int(coordenadas[1]))
             
         if opcion == "2":
-            """
-            
-            """
+            coordenada_marcada = input("Ingrese ")
+        else:
+            print("Opción inválida.")
+    print("¡GRACIAS POR JUGAR!\n"
+          + "¡HASTA LA PRÓXIMA!")
     jugar()
