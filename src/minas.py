@@ -9,6 +9,7 @@ Este ejercicio es una excelente manera de evaluar y mejorar las habilidades de p
 
 import random
 
+
 def mostrar_tablero(tablero:list, mostrar_minas: bool = False) -> None:
     """
     Función que muestra el tablero del buscaminas
