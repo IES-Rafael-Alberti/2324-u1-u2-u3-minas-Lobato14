@@ -9,11 +9,12 @@ Este ejercicio es una excelente manera de evaluar y mejorar las habilidades de p
 
 import random
 
-def mostrarTablero(tablero:list, mostrar_minas: bool = False) -> None:
+def mostrar_tablero(tablero:list, mostrar_minas: bool = False) -> None:
     """
     Función que muestra el tablero del buscaminas
 
-    Parámetros:
+    Parameters
+    ----------
     - tablero : list
         Es una lista de listas que representa el estado actual del tablero.
     - mostrar_minas : bool
@@ -37,11 +38,12 @@ def mostrarTablero(tablero:list, mostrar_minas: bool = False) -> None:
                     print(tablero[fila - 1][columna - 1], end=' ')
         print()
 
-def mostrarMenu() -> str:
+def mostrar_menu() -> str:
     """
     Muestra el menú del juego de buscaminas y solicita al usuario que elija una opción.
 
-    Returns:
+    Returns
+    -------
     - str: 
         La opción seleccionada por el usuario.
     """
@@ -51,11 +53,12 @@ def mostrarMenu() -> str:
     return input("Elija una opcion: ")
 
 
-def generarMinas(filas: int, columnas: int, tablero: list[list[str]]) -> list[list[str]]:
+def generar_minas(filas: int, columnas: int, tablero: list[list[str]]) -> list[list[str]]:
     """
     Genera minas aleatorias en el tablero del juego de buscaminas.
 
-    Parameters:
+    Parameters
+    ----------
     - filas : int 
         Número de filas del tablero.
     - columnas : int
@@ -63,7 +66,8 @@ def generarMinas(filas: int, columnas: int, tablero: list[list[str]]) -> list[li
     - tablero : (list[list[str]])
         Matriz que representa el tablero del juego.
 
-    Returns:
+    Returns
+    -------
     - list[list[str]]
         El tablero con las minas generadas.
     """
@@ -75,10 +79,25 @@ def generarMinas(filas: int, columnas: int, tablero: list[list[str]]) -> list[li
             tablero[fila_mina - 1][columna_mina - 1] = mina
     return tablero
 
-
-def contarMinasAlrededor(tablero, fila, columna):
+def contar_minas_alrededor(tablero:list[list[str]], fila: int, columna:int) -> int:
     """
-    Función que cuenta el número de minas alrededor de una celda
+    Función que cuenta el número de minas alrededor de una celda en el tablero 
+    del buscaminas.
+
+    Parameters
+    ----------
+    - tablero : list[list[str]]
+        Matriz que representa el tablero del juego.
+    - fila : int
+        Fila de la celda en el tablero.
+    - columna : int
+        Columna de la celda en el tablero.
+
+    Returns
+    --------
+    - int: 
+        Número de minas alrededor de la celda.
+
     """
     mina = "*"
     filas = len(tablero)
@@ -89,24 +108,32 @@ def contarMinasAlrededor(tablero, fila, columna):
         for columna_adyacente in range(max(1, columna - 1), min(columnas, columna + 2)):
             if tablero[fila_adyacente - 1][columna_adyacente - 1] == mina:
                 contador += 1
-
     return contador
 
-def revelarCelda(tablero, fila, columna):
+def revelar_celda(tablero:list[list[str]], fila:int, columna:int) -> None:
     """
-    Función que revela una celda en el tablero
+    Función que revela una celda en el tablero del buscaminas
+
+    Parameters
+    ----------
+    - tablero : list[list[str]]
+        Matriz que representa el tablero del juego.
+    - fila : int 
+        Fila de la celda a revelar.
+    - columna : int 
+        Columna de la celda a revelar.
     """
     if tablero[fila - 1][columna - 1] == '.':
-        minas_alrededor = contarMinasAlrededor(tablero, fila, columna)
+        minas_alrededor = contar_minas_alrededor(tablero, fila, columna)
         tablero[fila - 1][columna - 1] = str(minas_alrededor) if minas_alrededor > 0 else ' '
         if minas_alrededor == 0:
             # Revelar celdas adyacentes si no hay minas alrededor
             for fila_adyacente in range(max(1, fila - 1), min(len(tablero), fila + 2)):
                 for columna_adyacente in range(max(1, columna - 1), min(len(tablero[0]), columna + 2)):
                     if tablero[fila_adyacente - 1][columna_adyacente - 1] == '.':
-                        revelarCelda(tablero, fila_adyacente, columna_adyacente)
+                        revelar_celda(tablero, fila_adyacente, columna_adyacente)
 
-def marcarCelda(tablero, fila, columna):
+def marcar_celda(tablero, fila, columna):
     """
     Función que marca una celda en el tablero
     """
@@ -114,20 +141,20 @@ def marcarCelda(tablero, fila, columna):
     if tablero[fila - 1][columna - 1] == '.':
         tablero[fila - 1][columna - 1] = marcador_mina
 
-def actualizarTablero(tablero, opcion, coordenadas, filas, columnas):
+def actualizar_tablero(tablero, opcion, coordenadas, filas, columnas):
     """
     Función en la que actualiza el tablero en función de la opción seleccionada
     """
     fila, columna = coordenadas
     if 1 <= fila <= filas and 1 <= columna <= columnas:
         if opcion == '1':
-            revelarCelda(tablero, fila, columna)
+            revelar_celda(tablero, fila, columna)
         elif opcion == '2':
-            marcarCelda(tablero, fila, columna)
+            marcar_celda(tablero, fila, columna)
     else:
         return "Coordenadas fuera de rango. Vuelve a intentar."
 
-def revisarVictoria(tablero):
+def revisar_victoria(tablero):
     """
     Función que revisa si todas las celdas sin minas han sido reveladas
     """
@@ -144,13 +171,13 @@ if __name__ == "__main__":
     tablero = [['.' for _ in range(columnas)] for _ in range(filas)]
 
     opcion = ""
-    generarMinas(filas, columnas, tablero)
+    generar_minas(filas, columnas, tablero)
     juego_en_curso = True
 
     while opcion != '3' and juego_en_curso:
 
-        mostrarTablero(tablero)
-        opcion = mostrarMenu()
+        mostrar_tablero(tablero)
+        opcion = mostrar_menu()
 
         if opcion == '1' or opcion == '2':
 
@@ -163,17 +190,17 @@ if __name__ == "__main__":
                     coordenadas_validas = True
                 else:
                     print("Coordenadas inválidas. Vuelve a intentar.")
-            actualizarTablero(tablero, opcion, coordenadas, filas, columnas)
+            actualizar_tablero(tablero, opcion, coordenadas, filas, columnas)
             if opcion == '1' and tablero[coordenadas[0] - 1][coordenadas[1] - 1] == '*':
                 # Revelar todas las minas si el jugador revela una mina
                 # en caso de que pierda
-                mostrarTablero(tablero, mostrar_minas = True)
+                mostrar_tablero(tablero, mostrar_minas = True)
                 print("¡Has perdido!")
                 juego_en_curso = False
-            elif revisarVictoria(tablero):
+            elif revisar_victoria(tablero):
                 # Revisar si todas las celdas sin minas han sido reveladas
                 # en caso de que haya conseguido la victoria
-                mostrarTablero(tablero, mostrar_minas = True)
+                mostrar_tablero(tablero, mostrar_minas = True)
                 print("¡Has ganado!")
                 juego_en_curso = False
         elif opcion != '3':
