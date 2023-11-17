@@ -133,17 +133,46 @@ def revelar_celda(tablero:list[list[str]], fila:int, columna:int) -> None:
                     if tablero[fila_adyacente - 1][columna_adyacente - 1] == '.':
                         revelar_celda(tablero, fila_adyacente, columna_adyacente)
 
-def marcar_celda(tablero, fila, columna):
+def marcar_celda(tablero:list[list[str]], fila:int, columna:int) -> None:
     """
-    Función que marca una celda en el tablero
+    Marca una celda en el tablero del buscaminas.
+
+    Parameters
+    ----------
+    - tablero: list[list[str]]
+        Matriz que representa el tablero del juego.
+    - fila : int
+        Fila de la celda a marcar.
+    - columna : int
+        Columna de la celda a marcar.
     """
     marcador_mina = "F"
     if tablero[fila - 1][columna - 1] == '.':
         tablero[fila - 1][columna - 1] = marcador_mina
 
-def actualizar_tablero(tablero, opcion, coordenadas, filas, columnas):
+def actualizar_tablero(tablero:list[list[str]], opcion:str, coordenadas:tuple[int, int], 
+                       filas:int, columnas:int) -> str:
     """
-    Función en la que actualiza el tablero en función de la opción seleccionada
+    Función que actualiza el tablero en función de la opción seleccionada.
+
+    Parameters
+    ----------
+    - tablero : list[list[str]]
+        Matriz que representa el tablero del juego.
+    - opcion : str
+        Opción que se vaya a introducir
+    - coordenadas : tuple[int, int]:
+        Coordenadas de la celda a actualizar.
+    - filas : int
+        Número de filas del tablero.
+    - columnas : int 
+        Número de columnas del tablero.
+
+    Returns
+    --------
+    - str: 
+        Mensaje de error si las coordenadas están fuera de rango, 
+        None si todo está correcto.
     """
     fila, columna = coordenadas
     if 1 <= fila <= filas and 1 <= columna <= columnas:
@@ -154,9 +183,20 @@ def actualizar_tablero(tablero, opcion, coordenadas, filas, columnas):
     else:
         return "Coordenadas fuera de rango. Vuelve a intentar."
 
-def revisar_victoria(tablero):
+def revisar_victoria(tablero:list[list[str]]) -> bool:
     """
     Función que revisa si todas las celdas sin minas han sido reveladas
+
+    Parameters
+    ----------
+    - tablero : list[List[str]]
+        Matriz que representa el tablero del juego.
+
+    Returns
+    -------
+    - bool: 
+        True si todas las celdas sin minas han sido reveladas, False en caso contrario.
+
     """
     for fila in tablero:
         for celda in fila:
